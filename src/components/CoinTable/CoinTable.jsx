@@ -19,10 +19,10 @@ function CoinTable({currency}) {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['coin', page , currency],
         queryFn: () => fetchCoinData(page, currency),
-        // retry: 2,
-        // retryDelay: 1000,
-        // cacheTime: 1000 * 60 * 2,
-        // staleTime: 1000 * 60 * 2,
+        retry: 2,
+        retryDelay: 1000,
+        cacheTime: 1000 * 60 * 2,
+        staleTime: 1000 * 60 * 2,
     });
     if (isError) {
         return <div>Error: {error.message}</div>
