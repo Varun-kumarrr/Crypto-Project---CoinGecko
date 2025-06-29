@@ -55,13 +55,13 @@ function CoinTable({currency}) {
                                 </div>
                             </div>
                             <div className="basis-[25%]">
-                                {coin.current_price}{currencySymbol}
+                                {currencySymbol}{coin.current_price}
                             </div>
                             <div className="basis-[20%]">
-                                {coin.price_change_24h}{currencySymbol}
+                                {currencySymbol}{coin.price_change_24h}
                             </div>
                             <div className="basis-[20%]">
-                                {coin.market_cap}{currencySymbol}
+                                {currencySymbol}{coin.market_cap}
                             </div>
                         </div>
 
