@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchCoinData } from "../../services/fetchCoinData";
 import { useQuery } from "@tanstack/react-query";
 
 
-function CoinTable() {
+function CoinTable({currency}) {
     const [page, setPage] = useState(1);
+    const [currencySymbol , setCurrencySymbol ] = useState('$');
+    useEffect(()=>{
+        if(currency==='usd')
+        {
+            setCurrencySymbol('$');
+        }
+        if(currency==='inr')
+        {
+            setCurrencySymbol('₹');
+        }
+    },[currency])
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['coin', page],
-        queryFn: () => fetchCoinData(page, 'usd'),
-        retry: 2,
-        retryDelay: 1000,
-        cacheTime: 1000 * 60 * 2,
-        staleTime: 1000 * 60 * 2,
+        queryKey: ['coin', page , currency],
+        queryFn: () => fetchCoinData(page, currency),
+        // retry: 2,
+        // retryDelay: 1000,
+        // cacheTime: 1000 * 60 * 2,
+        // staleTime: 1000 * 60 * 2,
     });
     if (isError) {
         return <div>Error: {error.message}</div>
@@ -44,13 +55,13 @@ function CoinTable() {
                                 </div>
                             </div>
                             <div className="basis-[25%]">
-                                {coin.current_price}
+                                {coin.current_price}{currencySymbol}
                             </div>
                             <div className="basis-[20%]">
-                                {coin.price_change_24h}
+                                {coin.price_change_24h}{currencySymbol}
                             </div>
                             <div className="basis-[20%]">
-                                {coin.market_cap}
+                                {coin.market_cap}{currencySymbol}
                             </div>
                         </div>
 
